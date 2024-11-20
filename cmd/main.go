@@ -2,12 +2,22 @@ package main
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"github.com/tilthyx/cryptography/cmd/decrypt"
 	"github.com/tilthyx/cryptography/cmd/encrypt"
+	"log"
+	"os"
 )
 
 func main() {
-	enc, err := encrypt.Encrypt("LUCAS VIEIRA")
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Erro ao carregar o arquivo .env: %v", err)
+	}
+
+	Secret := os.Getenv("PASSWORD")
+
+	enc, err := encrypt.Encrypt(Secret)
 	if err != nil {
 		panic(err)
 	}
